@@ -1,0 +1,16 @@
+# config/routes.yaml
+api_users:
+    path: /api/users
+    controller: App\Controller\UserController::create
+    methods: ['POST']
+
+app_security:
+    path: /security
+    controller: App\Controller\SecurityController::security
+    methods: ['GET']
+
+app_login:
+    path: /login
+    controller: App\Controller\LoginController::login
+    methods: ['POST']
+
