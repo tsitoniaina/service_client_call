@@ -88,6 +88,7 @@ class UserController extends AbstractController
             'id' => $user->getId(),
             'email' => $user->getEmail(),
             'phone' => $user->getPhone(),
+            'role' => $user->getRoles()
             // Add other fields as needed
         ];
 
