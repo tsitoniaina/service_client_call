@@ -71,5 +71,28 @@ class UserController extends AbstractController
         return new JsonResponse(['status' => 'User updated!']);
     }
 
+   /**
+     * @Route("/api/users/{id}", name="api_get_user_by_id", methods={"GET"})
+     */
+    public function getUserById(int $id): JsonResponse
+    {
+        // Retrieve the user from the database
+        $user = $this->entityManager->getRepository(User::class)->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
+
+        // Convert user entity to array
+        $userData = [
+            'id' => $user->getId(),
+            'email' => $user->getEmail(),
+            'phone' => $user->getPhone(),
+            // Add other fields as needed
+        ];
+
+        return new JsonResponse($userData);
+    }
+
 
 }
