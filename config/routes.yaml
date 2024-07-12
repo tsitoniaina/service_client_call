@@ -14,3 +14,8 @@ app_login:
     controller: App\Controller\LoginController::login
     methods: ['POST']
 
+api_update_user:
+    path: /api/users/{id}
+    controller: App\Controller\UserController::update
+    methods: ['POST']
+

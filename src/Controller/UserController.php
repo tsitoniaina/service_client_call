@@ -39,4 +39,37 @@ class UserController extends AbstractController
 
         return new JsonResponse(['status' => 'User created!'], JsonResponse::HTTP_CREATED);
     }
+
+    /**
+ * @Route("/api/users/{id}", name="api_update_user", methods={"POST"})
+ */
+    public function update(Request $request, int $id): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        // Récupérer l'utilisateur depuis la base de données
+        $user = $this->entityManager->getRepository(User::class)->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found');
+        }
+
+        // Mettre à jour les informations de l'utilisateur si les champs sont fournis
+        if (isset($data['email'])) {
+            $user->setEmail($data['email']);
+        }
+        if (isset($data['password'])) {
+            $user->setPassword($this->passwordHasher->hashPassword($user, $data['password']));
+        }
+        if (isset($data['phone'])) {
+            $user->setPhone($data['phone']);
+        }
+
+        // Enregistrer les modifications
+        $this->entityManager->flush();
+
+        return new JsonResponse(['status' => 'User updated!']);
+    }
+
+
 }
