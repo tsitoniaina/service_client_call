@@ -1,10 +1,10 @@
 nelmio_api_doc:
     documentation:
         servers:
-          - url: http://localhost:8000
-            description: API over HTTP
-          - url: https://api.example.com/secured
-            description: API over HTTPS
+            - url: http://localhost:8000
+              description: API over HTTP
+            - url: https://api.example.com/secured
+              description: API over HTTPS
         info:
             title: My App
             description: This is an awesome app!
@@ -18,3 +18,10 @@ nelmio_api_doc:
                     bearerFormat: JWT
         security:
             - Bearer: []
+
+    areas:
+        default:
+            path_patterns:
+                - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
+            host_patterns: []
+            name_patterns: []
