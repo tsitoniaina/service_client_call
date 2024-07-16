@@ -152,17 +152,20 @@ class UserController extends AbstractController
      */
     public function getUserById(int $id): JsonResponse
     {
+        // Retrieve the user from the database
         $user = $this->entityManager->getRepository(User::class)->find($id);
 
         if (!$user) {
             throw $this->createNotFoundException('User not found');
         }
 
+        // Convert user entity to array
         $userData = [
             'id' => $user->getId(),
             'email' => $user->getEmail(),
             'phone' => $user->getPhone(),
             'role' => $user->getRoles()
+            // Add other fields as needed
         ];
 
         return new JsonResponse($userData);
