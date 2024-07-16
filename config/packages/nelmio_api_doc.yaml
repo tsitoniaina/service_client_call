@@ -3,13 +3,10 @@ nelmio_api_doc:
         servers:
             - url: http://localhost:8000
               description: API over HTTP
-            - url: https://api.example.com/secured
-              description: API over HTTPS
         info:
             title: My App
             description: This is an awesome app!
             version: 1.0.0
-            x-build: #CommitHash
         components:
             securitySchemes:
                 Bearer:
@@ -18,11 +15,61 @@ nelmio_api_doc:
                     bearerFormat: JWT
         security:
             - Bearer: []
+        paths:
+            /login:
+                post:
+                    tags:
+                        - Authentication
+                    summary: "Login a user"
+                    description: "Login a user with email and password"
+                    requestBody:
+                        required: true
+                        content:
+                            application/json:
+                                schema:
+                                    type: object
+                                    properties:
+                                        email:
+                                            type: string
+                                            example: "user@example.com"
+                                        password:
+                                            type: string
+                                            example: "password"
+                    responses:
+                        '200':
+                            description: "Login successful"
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            message:
+                                                type: string
+                                                example: "Login successful"
+                        '400':
+                            description: "Bad request"
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            message:
+                                                type: string
+                                                example: "Email and password are required."
+                        '401':
+                            description: "Unauthorized"
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            message:
+                                                type: string
+                                                example: "Invalid email or password."
 
     areas:
         default:
             path_patterns:
                 - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
                 - ^/login$ # Accepts the /login endpoint
-            host_patterns: []
-            name_patterns: []
+            with_annotation: true
