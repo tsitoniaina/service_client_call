@@ -23,5 +23,6 @@ nelmio_api_doc:
         default:
             path_patterns:
                 - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
+                - ^/login$ # Accepts the /login endpoint
             host_patterns: []
             name_patterns: []
